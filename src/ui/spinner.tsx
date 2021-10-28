@@ -9,6 +9,7 @@ export const Spinner = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        height: 80,
       }}
     >
       <CircularProgress />

@@ -1,4 +1,5 @@
 import { action, makeObservable, observable } from "mobx";
+import { fetchNews } from "../api/fetchNews";
 import { fetchUsers } from "../api/fetchUsers";
 
 type userInfo = {
@@ -17,6 +18,7 @@ export interface IUsers {
   getUsersFromApi: () => void;
   isLoading: boolean;
   searchPage: number;
+  getUserCountNewsFromApi: (userId: number) => any;
 }
 
 export class Users implements IUsers {
@@ -30,6 +32,7 @@ export class Users implements IUsers {
       createUser: action,
       getUsers: action,
       getUsersFromApi: action,
+      getUserCountNewsFromApi: action,
     });
   }
 
@@ -52,5 +55,19 @@ export class Users implements IUsers {
     this.searchPage += 1;
 
     this.isLoading = false;
+  };
+
+  getUserCountNewsFromApi = async (userId: number) => {
+    const userArrayId = this.users.findIndex((user) => user.id === userId);
+
+    if (this.users[userArrayId].countNews === null) {
+      return this.users[userArrayId].countNews;
+    }
+
+    const news = await fetchNews(userId);
+    if (userArrayId > -1) {
+      this.users[userArrayId].countNews = news.data.length;
+    }
+    return news.data.length;
   };
 }

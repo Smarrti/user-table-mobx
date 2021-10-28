@@ -22,7 +22,9 @@ export const App = observer(() => {
 
   useEffect(() => {
     window.addEventListener("scroll", loadMore);
-    return () => {};
+    return () => {
+      window.removeEventListener("scroll", loadMore);
+    };
   }, []);
 
   return (
@@ -30,7 +32,6 @@ export const App = observer(() => {
       <UserList store={store} />
 
       {store.isLoading && <Spinner />}
-
       <div className="footer" />
     </div>
   );
