@@ -1,18 +1,17 @@
-import { CircularProgress } from "@mui/material";
-import { teal } from "@mui/material/colors";
-import React from "react";
+import { CircularProgress } from '@mui/material'
+import React from 'react'
 
 export const Spinner = () => {
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        height: 80,
-      }}
-    >
+    <div style={style}>
       <CircularProgress />
     </div>
-  );
-};
+  )
+}
+
+const style = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  height: 80,
+}

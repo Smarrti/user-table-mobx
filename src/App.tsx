@@ -1,31 +1,35 @@
-import { observer } from "mobx-react-lite";
-import React, { useEffect } from "react";
-import { IUsers, Users } from "./store/users";
-import { Spinner } from "./ui/spinner";
-import { UserList } from "./ui/userList";
+import React, { useEffect } from 'react'
+import { observer } from 'mobx-react-lite'
+
+import { IUsers, Users } from './store/users'
+import { Spinner } from './ui/spinner'
+import { UserList } from './ui/userList'
 
 export const App = observer(() => {
-  const store: IUsers = new Users();
+  const store: IUsers = new Users()
 
-  store.getUsersFromApi();
+  store.getUsersFromApi()
 
   const loadMore = () => {
-    const footer = document.querySelector(".footer");
+    const footer = document.querySelector('.footer')
+
     if (!footer) {
-      return;
+      return
     }
 
     if (footer.getBoundingClientRect().bottom <= window.innerHeight) {
-      store.getUsersFromApi();
+      store.getUsersFromApi()
     }
-  };
+  }
 
   useEffect(() => {
-    window.addEventListener("scroll", loadMore);
+    window.addEventListener('scroll', loadMore)
+
     return () => {
-      window.removeEventListener("scroll", loadMore);
-    };
-  }, []);
+      window.removeEventListener('scroll', loadMore)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div>
@@ -34,5 +38,5 @@ export const App = observer(() => {
       {store.isLoading && <Spinner />}
       <div className="footer" />
     </div>
-  );
-});
+  )
+})
