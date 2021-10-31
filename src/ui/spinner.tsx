@@ -1,17 +1,18 @@
 import { CircularProgress } from '@mui/material'
 import React from 'react'
+import styled from 'styled-components'
+
+const Root = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+`
 
 export const Spinner = () => {
   return (
-    <div style={style}>
+    <Root>
       <CircularProgress />
-    </div>
+    </Root>
   )
-}
-
-const style = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  height: 80,
 }
