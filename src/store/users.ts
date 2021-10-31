@@ -53,16 +53,16 @@ export class Users implements IUsers {
   }
 
   getUserCountNewsFromApi = async (userId: number) => {
-    const userArrayId = this.users.findIndex(user => user.id === userId)
+    const index = this.users.findIndex(user => user.id === userId)
 
-    if (this.users[userArrayId].countNews === null) {
-      return this.users[userArrayId].countNews
+    if (Number.isInteger(this.users[index].countNews)) {
+      return this.users[index].countNews
     }
 
     const news = await fetchNews(userId)
 
-    if (userArrayId > -1) {
-      this.users[userArrayId].countNews = news.data.length
+    if (index > -1) {
+      this.users[index].countNews = news.data.length
     }
 
     return news.data.length
