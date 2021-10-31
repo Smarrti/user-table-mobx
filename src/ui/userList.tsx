@@ -41,7 +41,7 @@ export const UserList: FC<Props> = observer(({ store }) => {
   const [isAlertShow, setIsAlertShow] = useState(false)
   const [countNews, setCountNews] = useState(null)
 
-  const users = store.getUsers()
+  const users = store.users
 
   const getCountNews = async (id: number) => {
     setIsAlertShow(true)

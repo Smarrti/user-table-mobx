@@ -14,8 +14,7 @@ type userInfo = {
 
 export interface IUsers {
   users: userInfo[]
-  getUsers: () => userInfo[]
-  createUser: (user: userInfo) => void
+  setUsers: (user: userInfo[]) => void
   getUsersFromApi: () => void
   isLoading: boolean
   searchPage: number
@@ -30,19 +29,14 @@ export class Users implements IUsers {
   constructor() {
     makeObservable(this, {
       users: observable,
-      createUser: action,
-      getUsers: action,
+      setUsers: action,
       getUsersFromApi: action,
       getUserCountNewsFromApi: action,
     })
   }
 
-  getUsers() {
-    return this.users
-  }
-
-  createUser(user: userInfo) {
-    this.users.push(user)
+  setUsers(users: userInfo[]) {
+    this.users = users
   }
 
   getUsersFromApi = async () => {
@@ -52,7 +46,7 @@ export class Users implements IUsers {
     this.isLoading = true
 
     const users = await fetchUsers(this.searchPage)
-    users.data.forEach((user: userInfo) => this.createUser(user))
+    this.setUsers([...this.users, ...users.data])
     this.searchPage += 1
 
     this.isLoading = false
