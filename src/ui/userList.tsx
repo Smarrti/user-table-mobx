@@ -1,16 +1,17 @@
 import React, { FC, useState } from 'react'
 import { styled } from '@mui/material/styles'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Tooltip,
+} from '@mui/material'
 import TableCell, { tableCellClasses } from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
-import Paper from '@mui/material/Paper'
 import { teal } from '@mui/material/colors'
 import { observer } from 'mobx-react-lite'
-
-import { CountNewsAlert } from './countNewsAlert'
 
 import { IUsers } from '../store/users'
 
@@ -38,34 +39,31 @@ type Props = {
 }
 
 export const UserList: FC<Props> = observer(({ store }) => {
-  const [isAlertShow, setIsAlertShow] = useState(false)
   const [countNews, setCountNews] = useState(null)
+  const countNewsTitle =
+    countNews !== null ? `${countNews} новостей` : 'Загрузка'
 
   const users = store.users
 
   const getCountNews = async (id: number) => {
-    setIsAlertShow(true)
-
     const count = await store.getUserCountNewsFromApi(id)
     setCountNews(count)
   }
 
   const mouseOutHandle = () => {
     setCountNews(null)
-    setIsAlertShow(false)
   }
 
   return (
     <>
-      {isAlertShow && <CountNewsAlert countNews={countNews} />}
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
             <TableRow>
               <StyledTableCell>Name</StyledTableCell>
-              <StyledTableCell align="right">Email</StyledTableCell>
-              <StyledTableCell align="right">Gender</StyledTableCell>
-              <StyledTableCell align="right">Status</StyledTableCell>
+              <StyledTableCell align="center">Email</StyledTableCell>
+              <StyledTableCell align="center">Gender</StyledTableCell>
+              <StyledTableCell align="center">Status</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -74,15 +72,17 @@ export const UserList: FC<Props> = observer(({ store }) => {
                 <StyledTableCell component="th" scope="row">
                   {user.name}
                 </StyledTableCell>
-                <StyledTableCell
-                  align="right"
-                  onMouseOver={() => getCountNews(user.id)}
-                  onMouseOut={() => mouseOutHandle()}
-                >
-                  {user.email}
-                </StyledTableCell>
-                <StyledTableCell align="right">{user.gender}</StyledTableCell>
-                <StyledTableCell align="right">{user.status}</StyledTableCell>
+                <Tooltip title={countNewsTitle} placement="bottom">
+                  <StyledTableCell
+                    align="center"
+                    onMouseOver={() => getCountNews(user.id)}
+                    onMouseOut={() => mouseOutHandle()}
+                  >
+                    {user.email}
+                  </StyledTableCell>
+                </Tooltip>
+                <StyledTableCell align="center">{user.gender}</StyledTableCell>
+                <StyledTableCell align="center">{user.status}</StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
