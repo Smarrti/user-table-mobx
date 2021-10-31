@@ -1,4 +1,5 @@
 import { action, makeObservable, observable } from 'mobx'
+
 import { fetchNews } from '../api/fetchNews'
 import { fetchUsers } from '../api/fetchUsers'
 

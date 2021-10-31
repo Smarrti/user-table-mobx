@@ -7,10 +7,12 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
-import { observer } from 'mobx-react-lite'
-import { IUsers } from '../store/users'
 import { teal } from '@mui/material/colors'
+import { observer } from 'mobx-react-lite'
+
 import { CountNewsAlert } from './countNewsAlert'
+
+import { IUsers } from '../store/users'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
